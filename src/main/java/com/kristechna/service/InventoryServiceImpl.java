@@ -123,7 +123,13 @@ public class InventoryServiceImpl implements InventoryService {
         Part originalPart = originalPartOpt.get();
         String multiPackName = quantity + "x " + originalPart.getName();
         double multiPackPrice = originalPart.getPrice() * quantity;
-        int multiPackInventory = originalPart.getInventory(); // Or adjust as needed
+
+
+        int multiPackInventory = originalPart.getInventory();
+
+
+        int multiPackMinInventory = originalPart.getMinInventory();
+        int multiPackMaxInventory = originalPart.getMaxInventory();
 
         Part multiPackPart;
         if (originalPart instanceof InhousePart inhousePart) {
@@ -131,8 +137,8 @@ public class InventoryServiceImpl implements InventoryService {
                     multiPackName,
                     multiPackPrice,
                     multiPackInventory,
-                    originalPart.getMinInventory(),
-                    originalPart.getMaxInventory(),
+                    multiPackMinInventory,
+                    multiPackMaxInventory,
                     inhousePart.getMachineId() + 1000 // Different machine ID
             );
         } else if (originalPart instanceof OutsourcedPart outsourcedPart) {
@@ -140,22 +146,23 @@ public class InventoryServiceImpl implements InventoryService {
                     multiPackName,
                     multiPackPrice,
                     multiPackInventory,
-                    originalPart.getMinInventory(),
-                    originalPart.getMaxInventory(),
+                    multiPackMinInventory,
+                    multiPackMaxInventory,
                     outsourcedPart.getCompanyName()
             );
         } else {
             throw new IllegalArgumentException("Unknown part type");
         }
 
-        return savePart(multiPackPart);
+
+        return partRepository.save(multiPackPart);
     }
 
     @Override
     @Transactional
     public void addSampleInventory() {
         if (isInventoryEmpty()) {
-            // Create parts using Set to prevent duplicates
+            // To prevent duplicates
             Set<Part> partsSet = new HashSet<>();
 
             Part gpu = new InhousePart("NVIDIA RTX 4080", 1199.99, 15, 2, 25, 1001);
@@ -171,11 +178,13 @@ public class InventoryServiceImpl implements InventoryService {
             partsSet.add(motherboard);
 
             // Save all parts from the Set
+
             for (Part part : partsSet) {
                 partRepository.save(part);
             }
 
             // Create products using Set to prevent duplicates
+
             Set<Product> productsSet = new HashSet<>();
 
             Product gamingPc1 = new Product("KrisTechna Pro Gaming PC", 2499.99, 8);
@@ -201,7 +210,8 @@ public class InventoryServiceImpl implements InventoryService {
             productsSet.add(vrReadyPc);
             productsSet.add(streamingPc);
 
-            // Save all products from the Set
+            // Saving all the products from the Set:
+
             for (Product product : productsSet) {
                 productRepository.save(product);
             }

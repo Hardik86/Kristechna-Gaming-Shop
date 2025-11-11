@@ -40,7 +40,7 @@ public class PartTest {
         OutsourcedPart part = new OutsourcedPart("Test RAM", 89.99,
                 50, 10, 100, "Corsair");
 
-        // Test initial values
+
         assertEquals(10, part.getMinInventory());
         assertEquals(100, part.getMaxInventory());
         assertEquals(50, part.getInventory());
