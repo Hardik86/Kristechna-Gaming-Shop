@@ -62,8 +62,8 @@ public class ProductController {
             if (product.getParts().contains(part)) {
                 model.addAttribute("errorHtml", "Part '" + part.getName() + "' already added. " +
                         "<a href='/create-multi-pack/" + part.getId() + "/2' style='color: blue; text-decoration: underline;'>" +
-                        "Click here to create a 2-pack of this part</a> or create a multi-pack part manually.");
-
+                        "Click here to create a 2-pack of this part</a> or use the form below to create a custom multi-pack.");
+                model.addAttribute("originalPartId", part.getId());
                 model.addAttribute("product", product);
                 model.addAttribute("availableParts", inventoryService.getAllParts());
                 model.addAttribute("associatedParts", product.getParts());
@@ -168,6 +168,7 @@ public class ProductController {
             }
 
             // Update product details
+
             existingProduct.setName(product.getName());
             existingProduct.setPrice(product.getPrice());
             existingProduct.setInventory(newInventory);

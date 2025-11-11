@@ -21,7 +21,6 @@
     <section class="form-section">
         <h3>Product Detail</h3>
 
-
         <div th:if="${errorHtml}" class="message error" th:utext="${errorHtml}">
         </div>
         <div th:if="${error}" class="message error">
@@ -31,6 +30,18 @@
             <span th:text="${message}"></span>
         </div>
 
+        <!-- Manual Multi-pack Creation -->
+        <div th:if="${errorHtml}" class="manual-multipack">
+            <h4>Create Custom Multi-pack</h4>
+            <form th:action="@{/create-multi-pack-manual}" method="get" class="multipack-form">
+                <input type="hidden" name="originalPartId" th:value="${originalPartId}">
+                <div class="form-group">
+                    <label>Quantity:</label>
+                    <input type="number" name="quantity" min="2" max="10" value="2" required>
+                </div>
+                <button type="submit" class="button submit">Create Multi-pack</button>
+            </form>
+        </div>
 
         <form th:action="${product.id != null} ? @{/update-product-final} : @{/save-product}"
               th:object="${product}" method="post">
@@ -66,7 +77,6 @@
             </div>
         </form>
 
-
         <div th:if="${product.id != null}" class="parts-management">
             <div class="available-parts">
                 <h4>Available Parts</h4>
@@ -89,7 +99,6 @@
                         <td th:text="${part.minInventory}"></td>
                         <td th:text="${part.maxInventory}"></td>
                         <td>
-
                             <a th:href="@{/add-part-to-product/{productId}/{partId}(productId=${product.id}, partId=${part.id})}"
                                class="button add">Add</a>
                         </td>
@@ -119,7 +128,6 @@
                         <td th:text="${part.minInventory}"></td>
                         <td th:text="${part.maxInventory}"></td>
                         <td>
-
                             <a th:href="@{/remove-part-from-product/{productId}/{partId}(productId=${product.id}, partId=${part.id})}"
                                class="button remove">Remove</a>
                         </td>

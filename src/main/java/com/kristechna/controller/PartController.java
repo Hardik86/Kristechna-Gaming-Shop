@@ -29,6 +29,36 @@ public class PartController {
         return "outsourced-part-form";
     }
 
+    @GetMapping("/create-multi-pack-manual")
+    public String createMultiPackPartManual(@RequestParam Long originalPartId,
+                                            @RequestParam int quantity,
+                                            Model model) {
+        try {
+            Part multiPackPart = inventoryService.createMultiPackPart(originalPartId, quantity);
+            model.addAttribute("message", "Multi-pack part created: " + multiPackPart.getName());
+        } catch (Exception e) {
+            model.addAttribute("error", "Failed to create multi-pack part: " + e.getMessage());
+        }
+
+        model.addAttribute("parts", inventoryService.getAllParts());
+        model.addAttribute("products", inventoryService.getAllProducts());
+        return "main";
+    }
+
+    @GetMapping("/create-multi-pack/{partId}/{quantity}")
+    public String createMultiPackPart(@PathVariable Long partId, @PathVariable int quantity, Model model) {
+        try {
+            Part multiPackPart = inventoryService.createMultiPackPart(partId, quantity);
+            model.addAttribute("message", "Multi-pack part created: " + multiPackPart.getName());
+        } catch (Exception e) {
+            model.addAttribute("error", "Failed to create multi-pack part: " + e.getMessage());
+        }
+
+        model.addAttribute("parts", inventoryService.getAllParts());
+        model.addAttribute("products", inventoryService.getAllProducts());
+        return "main";
+    }
+
     @PostMapping("/save-inhouse-part")
     public String saveInhousePart(@Valid @ModelAttribute("part") InhousePart part,
                                   BindingResult result, Model model) {
@@ -75,20 +105,6 @@ public class PartController {
 
         inventoryService.savePart(part);
         return "redirect:/mainscreen";
-    }
-
-    @GetMapping("/create-multi-pack/{partId}/{quantity}")
-    public String createMultiPackPart(@PathVariable Long partId, @PathVariable int quantity, Model model) {
-        try {
-            Part multiPackPart = inventoryService.createMultiPackPart(partId, quantity);
-            model.addAttribute("message", "Multi-pack part created: " + multiPackPart.getName());
-        } catch (Exception e) {
-            model.addAttribute("error", "Failed to create multi-pack part: " + e.getMessage());
-        }
-
-        model.addAttribute("parts", inventoryService.getAllParts());
-        model.addAttribute("products", inventoryService.getAllProducts());
-        return "main";
     }
 
     @GetMapping("/update-part/{id}")
