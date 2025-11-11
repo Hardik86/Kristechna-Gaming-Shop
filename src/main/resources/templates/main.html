@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kristechna Gaming Shop - Inventory Management</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header>
+    <h1>Kristechna: "Connect. Evolve. Upgrade."</h1>
+    <h2>Inventory Management System</h2>
+    <nav>
+        <a th:href="@{/mainscreen}">Home</a>
+        <a href="#parts-section">Parts</a>
+        <a href="#products-section">Products</a>
+        <a th:href="@{/about}">About</a>
+    </nav>
+</header>
+
+<main>
+    <!-- Message Display -->
+    <div th:if="${message}" class="message success">
+        <span th:text="${message}"></span>
+    </div>
+    <div th:if="${error}" class="message error">
+        <span th:text="${error}"></span>
+    </div>
+
+    <!-- Parts Section -->
+    <section id="parts-section" class="inventory-section">
+        <h3>Parts</h3>
+        <div class="filter-section">
+            <form th:action="@{/mainscreen}" method="get">
+                <label>Search Parts:</label>
+                <input type="text" name="partSearch" th:value="${partSearch}" placeholder="Search parts...">
+                <button type="submit">Search</button>
+                <a th:href="@{/mainscreen}" class="button">Clear</a>
+            </form>
+        </div>
+
+        <div class="actions">
+            <a th:href="@{/add-inhouse-part}" class="button">Add Inhouse Part</a>
+            <a th:href="@{/add-outsourced-part}" class="button">Add Outsourced Part</a>
+        </div>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Inventory</th>
+                <th>Min Inventory</th>
+                <th>Max Inventory</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="part : ${parts}">
+                <td th:text="${part.name}"></td>
+                <td th:text="'$' + ${#numbers.formatDecimal(part.price, 1, 2)}"></td>
+                <td th:text="${part.inventory}"></td>
+                <td th:text="${part.minInventory}"></td>
+                <td th:text="${part.maxInventory}"></td>
+                <td>
+                    <a th:href="@{/update-part/{id}(id=${part.id})}" class="button update">Update</a>
+                    <a th:href="@{/delete-part/{id}(id=${part.id})}" class="button delete"
+                       onclick="return confirm('Are you sure you want to delete this part?')">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products-section" class="inventory-section">
+        <h3>Products</h3>
+        <div class="filter-section">
+            <form th:action="@{/mainscreen}" method="get">
+                <label>Search Products:</label>
+                <input type="text" name="productSearch" th:value="${productSearch}" placeholder="Search products...">
+                <button type="submit">Search</button>
+                <a th:href="@{/mainscreen}" class="button">Clear</a>
+            </form>
+        </div>
+
+        <div class="actions">
+            <a th:href="@{/add-product}" class="button">Add Product</a>
+        </div>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Inventory</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product : ${products}">
+                <td th:text="${product.name}"></td>
+                <td th:text="'$' + ${#numbers.formatDecimal(product.price, 1, 2)}"></td>
+                <td th:text="${product.inventory}"></td>
+                <td>
+                    <a th:href="@{/update-product/{id}(id=${product.id})}" class="button update">Update</a>
+                    <a th:href="@{/buy-product/{id}(id=${product.id})}" class="button buy"
+                       onclick="return confirm('Buy this product?')">Buy Now</a>
+                    <a th:href="@{/delete-product/{id}(id=${product.id})}" class="button delete"
+                       onclick="return confirm('Are you sure you want to delete this product?')">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+</body>
+</html>
