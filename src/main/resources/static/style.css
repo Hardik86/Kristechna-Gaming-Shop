@@ -1,5 +1,4 @@
-/* Base Styles */
-
+/* Reset and Base Styles */
 * {
     margin: 0;
     padding: 0;
@@ -14,7 +13,6 @@ body {
 }
 
 /* Header Styles */
-
 header {
     background: darkslategray;
     color: white;
@@ -52,7 +50,6 @@ nav a:hover {
 }
 
 /* Main Content */
-
 main {
     max-width: 1200px;
     margin: 1rem auto;
@@ -60,7 +57,6 @@ main {
 }
 
 /* Section Styles */
-
 .inventory-section, .form-section, .about-section {
     background: white;
     padding: 1.5rem;
@@ -77,7 +73,6 @@ main {
 }
 
 /* Filter Section */
-
 .filter-section {
     background: whitesmoke;
     padding: 1rem;
@@ -97,13 +92,11 @@ main {
 }
 
 /* Actions */
-
 .actions {
     margin-bottom: 1rem;
 }
 
 /* Button Styles */
-
 .button {
     display: inline-block;
     padding: 0.5rem 1rem;
@@ -193,7 +186,6 @@ table tr:nth-child(even) {
 }
 
 /* Error Messages */
-
 .error {
     color: red;
     font-size: 0.9rem;
@@ -201,7 +193,6 @@ table tr:nth-child(even) {
 }
 
 /* Message Styles */
-
 .message {
     padding: 1rem;
     margin-bottom: 1rem;
@@ -221,7 +212,6 @@ table tr:nth-child(even) {
 }
 
 /* Responsive Design */
-
 @media (max-width: 768px) {
     nav {
         flex-direction: column;
