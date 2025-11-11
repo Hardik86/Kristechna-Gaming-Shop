@@ -1,0 +1,240 @@
+/* Base Styles */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: black;
+    background-color: lightgray;
+}
+
+/* Header Styles */
+
+header {
+    background: darkslategray;
+    color: white;
+    padding: 1rem 2rem;
+    border-bottom: 3px solid teal;
+}
+
+header h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: white;
+    font-weight: bold;
+}
+
+header h2 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: lightgray;
+}
+
+nav {
+    display: flex;
+    gap: 1rem;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+}
+
+nav a:hover {
+    background-color: teal;
+}
+
+/* Main Content */
+
+main {
+    max-width: 1200px;
+    margin: 1rem auto;
+    padding: 0 1rem;
+}
+
+/* Section Styles */
+
+.inventory-section, .form-section, .about-section {
+    background: white;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    border: 1px solid gray;
+}
+
+.inventory-section h3, .form-section h3, .about-section h3 {
+    color: darkslategray;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid teal;
+    padding-bottom: 0.5rem;
+}
+
+/* Filter Section */
+
+.filter-section {
+    background: whitesmoke;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid darkgray;
+}
+
+.filter-section form {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.filter-section input {
+    padding: 0.5rem;
+    border: 1px solid gray;
+}
+
+/* Actions */
+
+.actions {
+    margin-bottom: 1rem;
+}
+
+/* Button Styles */
+
+.button {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: slategray;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 0.5rem;
+}
+
+.button:hover {
+    background-color: darkslategray;
+}
+
+.button.update {
+    background-color: teal;
+}
+
+.button.delete {
+    background-color: darkred;
+}
+
+.button.buy {
+    background-color: green;
+}
+
+.button.submit {
+    background-color: teal;
+}
+
+.button.cancel {
+    background-color: gray;
+}
+
+.button.add {
+    background-color: blue;
+}
+
+.button.remove {
+    background-color: orange;
+    color: black;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+table th, table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid gray;
+}
+
+table th {
+    background-color: darkslategray;
+    color: white;
+}
+
+table tr:nth-child(even) {
+    background-color: whitesmoke;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid gray;
+}
+
+.form-actions {
+    margin-top: 1rem;
+}
+
+/* Error Messages */
+
+.error {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+}
+
+/* Message Styles */
+
+.message {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+}
+
+.message.success {
+    background-color: lightgreen;
+    color: darkgreen;
+    border: 1px solid green;
+}
+
+.message.error {
+    background-color: lightpink;
+    color: darkred;
+    border: 1px solid red;
+}
+
+/* Responsive Design */
+
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+    }
+
+    .filter-section form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .button {
+        display: block;
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+}

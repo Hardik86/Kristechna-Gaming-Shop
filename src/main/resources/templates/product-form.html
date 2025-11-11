@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product - Kristechna Gaming Shop</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header>
+    <h1>Kristechna: "Connect. Evolve. Upgrade."</h1>
+    <h2>Inventory Management System</h2>
+    <nav>
+        <a th:href="@{/mainscreen}">Home</a>
+        <a th:href="@{/mainscreen}">Parts</a>
+        <a th:href="@{/mainscreen}">Products</a>
+        <a th:href="@{/about}">About</a>
+    </nav>
+</header>
+
+<main>
+    <section class="form-section">
+        <h3>Product Detail</h3>
+
+
+        <div th:if="${errorHtml}" class="message error" th:utext="${errorHtml}">
+        </div>
+        <div th:if="${error}" class="message error">
+            <span th:text="${error}"></span>
+        </div>
+        <div th:if="${message}" class="message success">
+            <span th:text="${message}"></span>
+        </div>
+
+
+        <form th:action="${product.id != null} ? @{/update-product-final} : @{/save-product}"
+              th:object="${product}" method="post">
+            <input type="hidden" th:field="*{id}">
+
+            <div class="form-group">
+                <label>Name:</label>
+                <input type="text" th:field="*{name}" required>
+                <div th:if="${#fields.hasErrors('name')}" class="error">
+                    <span th:errors="*{name}"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Price:</label>
+                <input type="number" th:field="*{price}" step="0.01" min="0.01" required>
+                <div th:if="${#fields.hasErrors('price')}" class="error">
+                    <span th:errors="*{price}"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Inventory:</label>
+                <input type="number" th:field="*{inventory}" min="0" required>
+                <div th:if="${#fields.hasErrors('inventory')}" class="error">
+                    <span th:errors="*{inventory}"></span>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="button submit">Submit</button>
+                <a th:href="@{/mainscreen}" class="button cancel">Cancel</a>
+            </div>
+        </form>
+
+
+        <div th:if="${product.id != null}" class="parts-management">
+            <div class="available-parts">
+                <h4>Available Parts</h4>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Inventory</th>
+                        <th>Min</th>
+                        <th>Max</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="part : ${availableParts}">
+                        <td th:text="${part.name}"></td>
+                        <td th:text="'$' + ${#numbers.formatDecimal(part.price, 1, 2)}"></td>
+                        <td th:text="${part.inventory}"></td>
+                        <td th:text="${part.minInventory}"></td>
+                        <td th:text="${part.maxInventory}"></td>
+                        <td>
+
+                            <a th:href="@{/add-part-to-product/{productId}/{partId}(productId=${product.id}, partId=${part.id})}"
+                               class="button add">Add</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="associated-parts" th:if="${associatedParts}">
+                <h4>Associated Parts</h4>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Inventory</th>
+                        <th>Min</th>
+                        <th>Max</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="part : ${associatedParts}">
+                        <td th:text="${part.name}"></td>
+                        <td th:text="'$' + ${#numbers.formatDecimal(part.price, 1, 2)}"></td>
+                        <td th:text="${part.inventory}"></td>
+                        <td th:text="${part.minInventory}"></td>
+                        <td th:text="${part.maxInventory}"></td>
+                        <td>
+
+                            <a th:href="@{/remove-part-from-product/{productId}/{partId}(productId=${product.id}, partId=${part.id})}"
+                               class="button remove">Remove</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>

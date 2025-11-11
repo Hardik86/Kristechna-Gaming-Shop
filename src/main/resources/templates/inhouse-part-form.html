@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Inhouse Part - Kristechna Gaming Shop</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header>
+    <h1>Kristechna: "Connect. Evolve. Upgrade."</h1>
+    <h2>Inventory Management System</h2>
+    <nav>
+        <a th:href="@{/mainscreen}">Home</a>
+        <a th:href="@{/mainscreen}">Parts</a>
+        <a th:href="@{/mainscreen}">Products</a>
+        <a th:href="@{/about}">About</a>
+    </nav>
+</header>
+
+<main>
+    <section class="form-section">
+        <h3>Inhouse Part Detail</h3>
+
+        <!-- Error and Message Display -->
+        <div th:if="${error}" class="message error">
+            <span th:text="${error}"></span>
+        </div>
+        <div th:if="${message}" class="message success">
+            <span th:text="${message}"></span>
+        </div>
+
+
+        <form th:action="@{/save-inhouse-part}" th:object="${part}" method="post">
+            <input type="hidden" th:field="*{id}">
+
+            <div class="form-group">
+                <label>Name:</label>
+                <input type="text" th:field="*{name}" required>
+                <div th:if="${#fields.hasErrors('name')}" class="error">
+                    <span th:errors="*{name}"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Price:</label>
+                <input type="number" th:field="*{price}" step="0.01" min="0.01" required>
+                <div th:if="${#fields.hasErrors('price')}" class="error">
+                    <span th:errors="*{price}"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Inventory:</label>
+                <input type="number" th:field="*{inventory}" min="0" required>
+                <div th:if="${#fields.hasErrors('inventory')}" class="error">
+                    <span th:errors="*{inventory}"></span>
+                </div>
+            </div>
+
+            <!-- Min/max input fields in form] -->
+            <div class="form-group">
+                <label>Min Inventory:</label>
+                <input type="number" th:field="*{minInventory}" min="0" required>
+                <div th:if="${#fields.hasErrors('minInventory')}" class="error">
+                    <span th:errors="*{minInventory}"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Max Inventory:</label>
+                <input type="number" th:field="*{maxInventory}" min="1" required>
+                <div th:if="${#fields.hasErrors('maxInventory')}" class="error">
+                    <span th:errors="*{maxInventory}"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Machine ID:</label>
+                <input type="number" th:field="*{machineId}" required>
+                <div th:if="${#fields.hasErrors('machineId')}" class="error">
+                    <span th:errors="*{machineId}"></span>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="button submit">Submit</button>
+                <a th:href="@{/mainscreen}" class="button cancel">Cancel</a>
+            </div>
+        </form>
+    </section>
+</main>
+</body>
+</html>
